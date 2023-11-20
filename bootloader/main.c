@@ -1449,11 +1449,28 @@ ment_t ment_cinfo[] = {
 
 menu_t menu_cinfo = { ment_cinfo, "Console Info", 0, 0 };
 
+static void nothing() {}
+
+void enable_ums_sd()
+{
+	usb_ctxt_t usbs;
+	usbs.type = MMC_SD;
+	usbs.partition = 0;
+	usbs.offset = 0;
+	usbs.sectors = 0;
+	usbs.ro = 0;
+	usbs.system_maintenance = &nothing;
+	usbs.set_text = &nothing;
+
+	usb_device_gadget_ums(&usbs);
+}
+
 ment_t ment_tools[] = {
 	MDEF_BACK(),
 	MDEF_CHGLINE(),
 	MDEF_CAPTION("-------- Other -------", TXT_CLR_WARNING),
 	MDEF_HANDLER("AutoRCM", menu_autorcm),
+	MDEF_HANDLER("USB UMS SD CARD", enable_ums_sd),
 	MDEF_END()
 };
 
